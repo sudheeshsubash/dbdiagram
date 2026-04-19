@@ -6,6 +6,7 @@ import Templates from "./pages/Templates";
 import LandingPage from "./pages/LandingPage";
 import SettingsContextProvider from "./context/SettingsContext";
 import NotFound from "./pages/NotFound";
+import ComingSoonPage from "./pages/CommingSoonPage"
 
 export default function App() {
   return (
@@ -15,6 +16,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/editor" element={<Editor />} />
+          <Route path="/designer" element={<ComingSoonPage />} />
+          <Route path="/builder" element={<ComingSoonPage />} />
           <Route path="/editor/diagrams/:id" element={<Editor />} />
           <Route path="/editor/templates/:id" element={<Editor />} />
           <Route path="/bug-report" element={<BugReport />} />

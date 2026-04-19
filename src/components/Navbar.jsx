@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo_light_160.png";
 import { SideSheet } from "@douyinfe/semi-ui";
 import { IconMenu } from "@douyinfe/semi-icons";
 import { socials } from "../data/socials";
@@ -10,119 +9,76 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="py-4 px-12 sm:px-4 flex justify-between items-center">
+      <div className="py-5 px-16 sm:px-6 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center justify-between w-full">
-          <Link to="/">
-            <img src={logo} alt="logo" className="h-[48px] sm:h-[32px]" />
-          </Link>
-          <div className="md:hidden flex gap-12">
-            <Link
-              className="text-lg font-semibold hover:text-sky-800 transition-colors duration-300"
-              onClick={() =>
-                document
-                  .getElementById("features")
-                  .scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Features
-            </Link>
-            <Link
-              to="/editor"
-              className="text-lg font-semibold hover:text-sky-800 transition-colors duration-300"
-            >
-              Editor
-            </Link>
-            <Link
-              to="/templates"
-              className="text-lg font-semibold hover:text-sky-800 transition-colors duration-300"
-            >
-              Templates
-            </Link>
-            <Link
-              to={socials.docs}
-              className="text-lg font-semibold hover:text-sky-800 transition-colors duration-300"
-            >
-              Docs
-            </Link>
-          </div>
-          <div className="md:hidden block space-x-3 ms-12">
-            <a
-              title="Jump to Github"
-              className="px-2 py-2 hover:opacity-60 transition-all duration-300 rounded-full text-2xl"
-              href={socials.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="opacity-70 bi bi-github" />
-            </a>
-            <a
-              title="Follow us on X"
-              className="px-2 py-2 hover:opacity-60 transition-all duration-300 rounded-full text-2xl"
-              href={socials.twitter}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="opacity-70 bi bi-twitter-x" />
-            </a>
-            <a
-              title="Join the community on Discord"
-              className="px-2 py-2 hover:opacity-60 transition-all duration-300 rounded-full text-2xl"
-              href={socials.discord}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="opacity-70 bi bi-discord" />
-            </a>
+      {/* Brand Identity */}
+        <Link to="/" className="flex items-center gap-2 group">
+          <span className="text-xl font-black tracking-tighter text-slate-900">
+            TruQalis<span className="text-emerald-600">Studio</span>
+          </span>
+        </Link>
+
+          {/* Desktop Navigation - Pillars */}
+          <div className="md:hidden flex gap-8 items-center">
+            {[
+              { label: "ERD Modeler", path: "/editor", icon: "bi-diagram-3" },
+              { label: "API Designer", path: "/designer", icon: "bi-code-square" },
+              { label: "DOC Builder", path: "/builder", icon: "bi-file-earmark-text" }
+            ].map((item, idx) => (
+              <Link
+                key={idx}
+                to={item.path}
+                className="group flex items-center gap-2 text-[13px] font-bold text-zinc-500 hover:text-indigo-600 transition-all duration-300 uppercase tracking-wider"
+              >
+                <i className={`${item.icon} text-zinc-400 group-hover:text-indigo-600 transition-colors`} />
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
+
+        {/* Mobile Menu Toggle */}
         <button
           onClick={() => setOpenMenu((prev) => !prev)}
-          className="hidden md:inline-block h-[24px]"
+          className="hidden md:flex items-center justify-center w-10 h-10 rounded-xl bg-zinc-100 text-zinc-900"
         >
-          <IconMenu size="extra-large" />
+          <IconMenu size="large" />
         </button>
       </div>
-      <hr />
+
       <SideSheet
         title={
-          <img src={logo} alt="logo" className="sm:h-[32px] md:h-[42px]" />
+          <div className="text-xl font-black tracking-tighter text-zinc-900">
+            TruQalis<span className="text-indigo-600">Studio</span>
+          </div>
         }
         visible={openMenu}
         onCancel={() => setOpenMenu(false)}
         width={window.innerWidth}
       >
-        <Link
-          className="hover:bg-zinc-100 block p-3 text-base font-semibold"
-          onClick={() => {
-            document
-              .getElementById("features")
-              .scrollIntoView({ behavior: "smooth" });
-            setOpenMenu(false);
-          }}
-        >
-          Features
-        </Link>
-        <hr />
-        <Link
-          to="/editor"
-          className="hover:bg-zinc-100 block p-3 text-base font-semibold"
-        >
-          Editor
-        </Link>
-        <hr />
-        <Link
-          to="/templates"
-          className="hover:bg-zinc-100 block p-3 text-base font-semibold"
-        >
-          Templates
-        </Link>
-        <hr />
-        <Link
-          to={socials.docs}
-          className="hover:bg-zinc-100 block p-3 text-base font-semibold"
-        >
-          Docs
-        </Link>
+        <div className="flex flex-col h-full bg-white">
+          <div className="p-4 space-y-2">
+            {/* <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4">Architectural Tools</p> */}
+            {[
+              { label: "ERD Modeler", path: "/ERD-editor", icon: "bi-diagram-3" },
+              { label: "API Designer", path: "/API-designer", icon: "bi-code-square" },
+              { label: "DOC Builder", path: "/DOC-builder", icon: "bi-file-earmark-text" }
+            ].map((item, idx) => (
+              <Link
+                key={idx}
+                to={item.path}
+                className="flex items-center gap-4 p-4 text-zinc-900 font-bold border border-transparent active:bg-indigo-50 active:border-indigo-100 rounded-xl transition-all"
+                onClick={() => setOpenMenu(false)}
+              >
+                <div className="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-500">
+                  <i className={`${item.icon} text-lg`} />
+                </div>
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+        </div>
       </SideSheet>
     </>
   );
